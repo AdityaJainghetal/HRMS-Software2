@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://hrms-software2.onrender.com";
 
 export const postActivity = async ({
   token,

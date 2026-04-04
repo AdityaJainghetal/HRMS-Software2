@@ -19,7 +19,7 @@
 // // } from 'lucide-react';
 // // import { toast } from 'react-toastify';
 // // import axios from 'axios';
-// // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+// // const API_URL = import.meta.env.VITE_API_URL || 'https://hrms-software2.onrender.com';
 
 // // const Attendance = () => {
 
@@ -876,7 +876,7 @@
 
 //     try {
 //       const res = await axios.post(
-//         "http://localhost:5000/api/attendance/upload-attendance",
+//         "https://hrms-software2.onrender.com/api/attendance/upload-attendance",
 //         formData,
 //         { headers: { Authorization: `Bearer ${token}` } },
 //       );
@@ -908,7 +908,7 @@
 
 //     try {
 //       const res = await axios.get(
-//         "http://localhost:5000/api/employees",
+//         "https://hrms-software2.onrender.com/api/employees",
 //         config,
 //       );
 //       if (res.data?.status === true) {
@@ -938,7 +938,7 @@
 //         if (selectedDate) params.date = selectedDate;
 
 //         res = await axios.get(
-//           "http://localhost:5000/api/attendance/datefilter",
+//           "https://hrms-software2.onrender.com/api/attendance/datefilter",
 //           {
 //             params,
 //             ...config,
@@ -946,7 +946,7 @@
 //         );
 //       } else {
 //         // Employee: fetch only their own attendance
-//         res = await axios.get("http://localhost:5000/api/attendance/me", {
+//         res = await axios.get("https://hrms-software2.onrender.com/api/attendance/me", {
 //           params: { limit: 30 },
 //           ...config,
 //         });
@@ -1536,7 +1536,7 @@ const Attendance = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/attendance/upload-attendance",
+        "https://hrms-software2.onrender.com/api/attendance/upload-attendance",
         formData,
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -1568,7 +1568,7 @@ const Attendance = () => {
 
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/employees",
+        "https://hrms-software2.onrender.com/api/employees",
         config,
       );
       setEmployees(res.data?.data || []);
@@ -1597,17 +1597,20 @@ const Attendance = () => {
         if (selectedDate) params.date = selectedDate;
 
         res = await axios.get(
-          "http://localhost:5000/api/attendance/datefilter",
+          "https://hrms-software2.onrender.com/api/attendance/datefilter",
           {
             params,
             ...config,
           },
         );
       } else {
-        res = await axios.get("http://localhost:5000/api/attendance/me", {
-          params: { limit: 30 },
-          ...config,
-        });
+        res = await axios.get(
+          "https://hrms-software2.onrender.com/api/attendance/me",
+          {
+            params: { limit: 30 },
+            ...config,
+          },
+        );
       }
 
       setData(res.data?.data || []);
