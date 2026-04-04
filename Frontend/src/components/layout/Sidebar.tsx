@@ -30,6 +30,7 @@ import {
   Monitor,
   Laptop,
   ChevronDown,
+  List,
 } from "lucide-react"
 import logo  from '../../assets/download.jpg';
 
@@ -113,6 +114,7 @@ export const Sidebar = () => {
         { label: "Employees", href: "/employees", icon: Users },
         { label: "Departments", href: "/departments", icon: Building2 },
         { label: "Attendance", href: "/attendance", icon: UserCheck },
+        { label: "Tasks", href: "/taskmanagement", icon: List },
         { label: "Salary", href: "/salary", icon: DollarSign },
         { label: "Leave Requests", href: "/leave-requests", icon: Calendar },
         { label: "Recruitment", href: "/recruitment", icon: Briefcase },
@@ -125,6 +127,7 @@ export const Sidebar = () => {
         { label: "Dashboard", href: "/dashboard", icon: Building2 },
         { label: "My Profile", href: "/profile", icon: User },
         { label: "Attendance", href: "/attendance", icon: UserCheck },
+        { label: "Tasks", href: "/taskmanagement", icon: List },
         { label: "My Salary", href: "/salary", icon: DollarSign },
         { label: "Leave Requests", href: "/leave-requests", icon: Calendar },
         { label: "Calendar", href: "/calendar", icon: Calendar },
