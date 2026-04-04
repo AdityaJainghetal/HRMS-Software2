@@ -1,7 +1,7 @@
 import Task from "../models/Task.js";
 import Employee from "../models/Employee.js";
 
-// Get all tasks (HR sees all, Employee sees only their assigned tasks)
+// Get all tasks (HR sees all, Employee sees only their assigned tasks from today)
 export const getAllTasks = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -9,9 +9,21 @@ export const getAllTasks = async (req, res) => {
 
     let query = {};
 
-    // If user is not HR, filter tasks assigned to them
+    // If user is not HR, filter tasks assigned to them and from today
     if (userRole !== "hr") {
       query.assignedTo = userId;
+
+      // Get today's start and end time
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      // Filter tasks from today only
+      query.dateTime = {
+        $gte: today,
+        $lt: tomorrow,
+      };
     }
 
     const tasks = await Task.find(query)

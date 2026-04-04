@@ -602,7 +602,6 @@ const categories = [
   "Multipurpose",
   "Backend",
   "Tender",
-  
 ];
 
 const TaskManagement = () => {
@@ -677,7 +676,20 @@ const TaskManagement = () => {
       filterCategory === "all" || task.category === filterCategory;
 
     if (!isHR) {
-      return matchesSearch && matchesCategory && task.assignedTo === user?._id;
+      // Employees see only today's tasks that are assigned to them
+      const today = new Date();
+      const taskDate = new Date(task.dateTime);
+      const isToday =
+        taskDate.getDate() === today.getDate() &&
+        taskDate.getMonth() === today.getMonth() &&
+        taskDate.getFullYear() === today.getFullYear();
+
+      return (
+        isToday &&
+        matchesSearch &&
+        matchesCategory &&
+        task.assignedTo === user?._id
+      );
     }
 
     return matchesSearch && matchesCategory;
@@ -765,6 +777,7 @@ const TaskManagement = () => {
         description: editingTask.description,
         assignedTo: editingTask.assignedTo || null,
         dateTime: editingTask.dateTime.toISOString(),
+        status: editingTask.status || "pending",
       };
 
       const res = await axios.patch(
@@ -945,18 +958,20 @@ const TaskManagement = () => {
                 />
               </div> */}
 
-              <div>
-                <Label htmlFor="description">Description</Label>
-                <textarea
-                  id="description"
-                  className="w-full min-h-[100px] px-3 py-2 border border-input rounded-md resize-y"
-                  value={newTask.description}
-                  onChange={(e) =>
-                    setNewTask({ ...newTask, description: e.target.value })
-                  }
-                  placeholder="Task details and notes..."
-                />
-              </div>
+              {isHR && (
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <textarea
+                    id="description"
+                    className="w-full min-h-[100px] px-3 py-2 border border-input rounded-md resize-y"
+                    value={newTask.description}
+                    onChange={(e) =>
+                      setNewTask({ ...newTask, description: e.target.value })
+                    }
+                    placeholder="Task details and notes..."
+                  />
+                </div>
+              )}
             </div>
 
             <div className="flex justify-end space-x-3 pt-4">
@@ -1012,7 +1027,7 @@ const TaskManagement = () => {
               <TableHead>Category</TableHead>
               <TableHead>Assigned To</TableHead>
               <TableHead>Date & Time</TableHead>
-              <TableHead>Status</TableHead>
+              {isHR && <TableHead>Status</TableHead>}
               {isHR && <TableHead className="text-right">Actions</TableHead>}
             </TableRow>
           </TableHeader>
@@ -1051,7 +1066,7 @@ const TaskManagement = () => {
                     })}
                   </div>
                 </TableCell>
-                <TableCell>{getStatusBadge(task.status)}</TableCell>
+                {isHR && <TableCell>{getStatusBadge(task.status)}</TableCell>}
 
                 {isHR && (
                   <TableCell className="text-right">
@@ -1169,6 +1184,25 @@ const TaskManagement = () => {
                   dateFormat="dd/MM/yyyy hh:mm aa"
                   className="w-full px-3 py-2 border border-input rounded-md"
                 />
+              </div>
+
+              <div>
+                <Label>Status</Label>
+                <Select
+                  value={editingTask.status || "pending"}
+                  onValueChange={(val) =>
+                    setEditingTask({ ...editingTask, status: val })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="inprogress">In Progress</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div>
