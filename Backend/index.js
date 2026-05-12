@@ -35,13 +35,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: [
+      "https://hrms-software-five.vercel.app",
       "https://hrms-software2.vercel.app",
       "http://localhost:8080",
       "http://localhost:3000",
       "https://gammoda-public-portifolio.vercel.app",
-      "https://hrms-two-cyan.vercel.app",
-      "https://hrms-two-cyan.vercel.app",
-      "https://hrms-ivg5.vercel.app/"
     ],
     credentials: true,
   }),
