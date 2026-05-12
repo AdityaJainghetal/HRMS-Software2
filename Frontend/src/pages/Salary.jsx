@@ -584,7 +584,8 @@ const Salary = () => {
                              onClick={() => handleMarkAsPaid(salary.id)}
                              title="Mark as paid"
                            >
-                             <DollarSign className="w-4 h-4" />
+                             {/* <DollarSign className="w-4 h-4" /> */}
+                             Paid
                            </Button>
                          )}
                        <Button 
